@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин</title>
+    <script>
+        function buyProduct(name, price) {
+            fetch('/order', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({product: name, price: price})
+            }).then(response => response.json())
+              .then(data => alert(data.message));
+        }
+    </script>
+</head>
+<body>
+    <h1>🛍️ Магазин</h1>
+    {% for product in products %}
+        <div>
+            <img src="{{ product.image }}" width="150"><br>
+            <b>{{ product.name }}</b> - {{ product.price }}₽<br>
+            <button onclick="buyProduct('{{ product.name }}', {{ product.price }})">Купить</button>
+        </div>
+        <hr>
+    {% endfor %}
+</body>
+</html>
